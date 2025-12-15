@@ -1,0 +1,34 @@
+FROM arm64v8/debian:trixie-slim
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y --no-install-recommends \
+    evemu-tools \
+    mosquitto-clients \
+    bc \
+    bash \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY --chown=0:0 mqtt_display_listener.sh /usr/local/bin/mqtt_display_listener.sh
+COPY --chown=0:0 wakeup_multitouch.sh /usr/local/bin/wakeup_multitouch.sh
+
+CMD ["/usr/local/bin/mqtt_display_listener.sh"]
+
+# Nel tuo Dockerfile.mqtt (vicino alla fine):
+
+# Assicurati che le variabili di configurazione MQTT siano definite (es. nel docker-compose/docker run)
+# Usiamo i placeholder qui:
+# ARG MQTT_BROKER="mqtt-broker"
+# ARG MQTT_PORT="1883"
+# ARG MQTT_USER="myuser"
+# ARG MQTT_PASS="mypass"
+
+HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
+  CMD /usr/bin/mosquitto_sub \
+      -h "$MQTT_BROKER" \
+      -p "$MQTT_PORT" \
+      -u "$MQTT_USER" \
+      -P "$MQTT_PASS" \
+      -t '$SYS/broker/version' \
+      -C 1 -q 1

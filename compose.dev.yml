@@ -1,0 +1,10 @@
+services:
+  wakeup:
+    build:
+      context: .
+      dockerfile: Dockerfile.wakeup
+  display:
+    build:
+      context: .
+      dockerfile: Dockerfile.display
+

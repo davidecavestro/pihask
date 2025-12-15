@@ -1,0 +1,19 @@
+FROM arm64v8/debian:trixie-slim
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y --no-install-recommends \
+    weston \
+    cog \
+    libinput-tools \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV XDG_RUNTIME_DIR=/tmp/runtime \
+    DISPLAY=:0
+
+COPY --chown=0:0 weston.ini /etc/xdg/weston/weston.ini
+COPY --chown=0:0 start_kiosk_wayland.sh /usr/local/bin/start_kiosk_wayland.sh
+COPY --chown=0:0 blank_screen.sh /usr/local/bin/blank_screen.sh
+CMD ["/usr/local/bin/start_kiosk_wayland.sh"]
+
+HEALTHCHECK --interval=30s --timeout=5s --retries=3 \
+  CMD /bin/sh -c 'pgrep -x weston && test -S $WAYLAND_SOCKET'
