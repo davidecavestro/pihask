@@ -1,36 +1,37 @@
 # pihask
 
-A low-end Kiosk for HomeAssistant on Raspberry Pi 3 with an [HDMI/USB touchscreen](https://www.amazon.it/dp/B0B9M5SCG4?).
+A low-end Kiosk for [HomeAssistant](https://www.home-assistant.io/) on Raspberry Pi
+with any [HDMI/USB touchscreen](https://www.amazon.it/dp/B0B9M5SCG4?).
 
 
 ## Features
 
-- Displays the [HomeAssistant](https://www.home-assistant.io/) dashboard on a [Cog](https://github.com/Igalia/cog)
-  WPE browser launcher running on
-  [Weston](https://wayland.pages.freedesktop.org/weston/) (the Wayland reference implementation)
-  with support for the video core.
+- Display the HomeAssistant dashboard on [Cog](https://github.com/Igalia/cog)
+  a WPE[^1] launcher running on Weston[^2] with support for the GPU[^3].
+- Optionally turn off the screen on idle timeout.
 - Wake up on touch.
-- Idle timeout optionally turning off the screen.
-- Optionally wake up on MQTT notifications (i.e. objects detected by [Frigate](https://frigate.video/))
-- Optional auto-login when HA is configured with trusted networks:
-  the kiosk has no need for credentials. See below for details.
-- Fully containerized, though with privileged containers (probabily privileges could be reduced)
+- Wake up optionally on MQTT notifications (i.e. objects detected by [Frigate](https://frigate.video/))
+- Auto-login optionally when HA is configured with trusted networks:
+  the kiosk has no need for credentials. \
+  See [the relevant section](#ha-trusted-networks) for details.
+- Fully containerized, though using privileged containers (probabily this could be easily refined)
 
 
 ## Requirements
 
-- Raspberry Pi 3 running Raspberry Pi OS (Trixie arm64)
+- Raspberry Pi 3 Model B+ running Raspberry Pi OS (tested with Trixie/arm64)
 - [Docker installed](https://docs.docker.com/engine/install/debian/)
 
 
 ## How to build and run
 
-So far you can just build the images on your own. In case of interest I'll publish them.
-
 Copy `.env.example` into `.env` and adapt it to your needs, then run
 ```bash
 docker compose -f compose.yml -f compose.dev.yml up --build
 ```
+> [!TIP]
+> So far there aren't official images, so you have to build them on your own.
+> In case of interest I'll publish them, please let me know.
 
 ## HA trusted networks
 
@@ -51,6 +52,10 @@ homeassistant:
 
 ```
 
+## Customizing Weston
+
+Please note most of the graphical environment are controlled by [weston.ini](weston.ini).
+The defaults can be easily overridden mounting a custmized copy at `/etc/xdg/weston/weston.ini`
 
 ## Raspberry boot config
 
@@ -84,3 +89,7 @@ dtoverlay=dwc2,dr_mode=host
 
 [all]
 ```
+
+[^1]: WPE is a WebKit port for embedded and low-consumption computer devices, see [wpewebkit.org](https://wpewebkit.org/)
+[^2]: [Weston](https://wayland.pages.freedesktop.org/weston/) is the Wayland reference implementation
+[^3]: [Videocore](https://en.wikipedia.org/wiki/VideoCore) is the low-power mobile multimedia processor on Raspberry Pi 
