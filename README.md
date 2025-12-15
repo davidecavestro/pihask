@@ -1,6 +1,6 @@
 # pihask
 
-A low-end Kiosk for [HomeAssistant](https://www.home-assistant.io/) on Raspberry Pi
+A low-end containerized Kiosk for [HomeAssistant](https://www.home-assistant.io/) on Raspberry Pi
 with any [HDMI/USB touchscreen](https://www.amazon.it/dp/B0B9M5SCG4?).
 
 
