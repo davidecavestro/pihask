@@ -5,22 +5,27 @@ A low-end Kiosk for HomeAssistant on Raspberry Pi 3 with an [HDMI/USB touchscree
 
 ## Features
 
-- Displays the HomeAssistant dashboard on a browser running on Weston (wayland reference implementation)
+- Displays the [HomeAssistant](https://www.home-assistant.io/) dashboard on a [Cog](https://github.com/Igalia/cog)
+  WPE browser launcher running on
+  [Weston](https://wayland.pages.freedesktop.org/weston/) (the Wayland reference implementation)
   with support for the video core.
 - Wake up on touch.
 - Idle timeout optionally turning off the screen.
-- Optionally wake up on MQTT notifications (objects detected from Frigate)
-- Optional auto-login uf HA is configured with trusted networks:
+- Optionally wake up on MQTT notifications (i.e. objects detected by [Frigate](https://frigate.video/))
+- Optional auto-login when HA is configured with trusted networks:
   the kiosk has no need for credentials. See below for details.
+- Fully containerized, though with privileged containers (probabily privileges could be reduced)
 
 
 ## Requirements
 
-- Raspberry Pi 3 running Raspberry Pi OS
+- Raspberry Pi 3 running Raspberry Pi OS (Trixie arm64)
 - [Docker installed](https://docs.docker.com/engine/install/debian/)
 
 
 ## How to build and run
+
+So far you can just build the images on your own. In case of interest I'll publish them.
 
 Copy `.env.example` into `.env` and adapt it to your needs, then run
 ```bash
