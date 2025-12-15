@@ -5,10 +5,13 @@ A low-end Kiosk for HomeAssistant on Raspberry Pi 3 with an [HDMI/USB touchscree
 
 ## Features
 
-Displays the HomeAssistant dashboard on a browser running on Weston (wayland reference implementation)
-with support for the video core.
-
-If HA is configured with trusted networks, the kiosk has no need for credentials. See below for details.
+- Displays the HomeAssistant dashboard on a browser running on Weston (wayland reference implementation)
+  with support for the video core.
+- Wake up on touch.
+- Idle timeout optionally turning off the screen.
+- Optionally wake up on MQTT notifications (objects detected from Frigate)
+- Optional auto-login uf HA is configured with trusted networks:
+  the kiosk has no need for credentials. See below for details.
 
 
 ## Requirements
