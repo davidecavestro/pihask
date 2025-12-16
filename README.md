@@ -6,8 +6,7 @@ with any [HDMI/USB touchscreen](https://www.amazon.it/dp/B0B9M5SCG4?).
 
 ## Features
 
-- Display the HomeAssistant dashboard on [Cog](https://github.com/Igalia/cog)
-  a WPE[^1] launcher running on Weston[^2] with support for the GPU[^3].
+- Display the HomeAssistant dashboard on [Cog](https://github.com/Igalia/cog) with support for the GPU[^gpu].
 - Optionally turn off the screen on idle timeout.
 - Wake up on touch.
 - Wake up optionally on MQTT notifications (i.e. objects detected by [Frigate](https://frigate.video/))
@@ -32,6 +31,14 @@ docker compose -f compose.yml -f compose.dev.yml up --build
 > [!TIP]
 > So far there aren't official images, so you have to build them on your own.
 > In case of interest I'll publish them, please let me know.
+
+
+## Implementation details
+
+This project basically produces two distinct images:
+- *kiosk-display*: takes control of the display using Weston[^weston] to render the lightweight browser Cod (a WPE[^wpe] launcher)
+- *kiosk-wakeup*: (optional) subscribes to an MQTT topic in order to wake up the screen on certain events (i.e. a person has been detected in the courtyard or at the door)
+
 
 ## HA trusted networks
 
@@ -90,6 +97,6 @@ dtoverlay=dwc2,dr_mode=host
 [all]
 ```
 
-[^1]: WPE is a WebKit port for embedded and low-consumption computer devices, see [wpewebkit.org](https://wpewebkit.org/)
-[^2]: [Weston](https://wayland.pages.freedesktop.org/weston/) is the Wayland reference implementation
-[^3]: [Videocore](https://en.wikipedia.org/wiki/VideoCore) is the low-power mobile multimedia processor on Raspberry Pi 
+[^wpe]: WPE is a WebKit port for embedded and low-consumption computer devices, see [wpewebkit.org](https://wpewebkit.org/)
+[^weston]: [Weston](https://wayland.pages.freedesktop.org/weston/) is the Wayland reference implementation
+[^gpu]: [Videocore](https://en.wikipedia.org/wiki/VideoCore) is the low-power mobile multimedia processor on Raspberry Pi 
