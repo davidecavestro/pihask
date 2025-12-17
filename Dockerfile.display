@@ -12,6 +12,7 @@ ENV XDG_RUNTIME_DIR=/tmp/runtime \
 
 COPY --chown=0:0 weston.ini /etc/xdg/weston/weston.ini
 COPY --chown=0:0 start_kiosk_wayland.sh /usr/local/bin/start_kiosk_wayland.sh
+COPY --chown=0:0 start_cog.sh /usr/local/bin/start_cog.sh
 COPY --chown=0:0 blank_screen.sh /usr/local/bin/blank_screen.sh
 CMD ["/usr/local/bin/start_kiosk_wayland.sh"]
 
