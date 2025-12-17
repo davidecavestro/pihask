@@ -15,15 +15,6 @@ COPY --chown=0:0 wakeup_multitouch.sh /usr/local/bin/wakeup_multitouch.sh
 
 CMD ["/usr/local/bin/mqtt_display_listener.sh"]
 
-# Nel tuo Dockerfile.mqtt (vicino alla fine):
-
-# Assicurati che le variabili di configurazione MQTT siano definite (es. nel docker-compose/docker run)
-# Usiamo i placeholder qui:
-# ARG MQTT_BROKER="mqtt-broker"
-# ARG MQTT_PORT="1883"
-# ARG MQTT_USER="myuser"
-# ARG MQTT_PASS="mypass"
-
 HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
   CMD /usr/bin/mosquitto_sub \
       -h "$MQTT_BROKER" \
